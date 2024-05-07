@@ -1,0 +1,16 @@
+query SingleBlog($blogId: String) {
+  Blog(id: $blogId) {
+    title
+    banner_image {
+      url
+    }
+    categories {
+      slug
+    }
+    content {
+      ... on Text {
+        text
+      }
+    }
+  }
+  }

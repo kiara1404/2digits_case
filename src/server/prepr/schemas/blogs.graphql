@@ -13,6 +13,7 @@ query Blogs($limit: Int) {
       categories {
         slug
       }
+      _id
     }
   }
 }
