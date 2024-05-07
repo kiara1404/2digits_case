@@ -4,6 +4,7 @@ import { Barlow, Fira_Sans, Inter } from 'next/font/google';
 import './globals.css';
 
 import NavigationBar from './components/Navigation/NavigationBar';
+import Footer from './components/Footer/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 const barlow = Barlow({ weight: ['100', '500', '600'] });
@@ -18,10 +19,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`m-auto w-10/12 ${barlow.className}`}>
-        <header>
           <NavigationBar />
-        </header>
         <main className="max-width-7xl">{children}</main>
+        <Footer />
       </body>
     </html>
   );

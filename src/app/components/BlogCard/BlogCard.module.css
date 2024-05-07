@@ -4,6 +4,16 @@
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 24px;
+  position: relative;
+}
+
+.tag {
+  position: absolute;
+  bottom: 0;
+  height: 32px;
+  border-radius: 4px;
+  padding: 4px 16px;
+  margin: 8px;
 }
 
 .image {
@@ -11,6 +21,7 @@
   width: 348px;
   object-fit: cover;
   max-width: none;
+  position: relative;
 }
 
 .title {
@@ -25,14 +36,23 @@
 }
 
 .text {
-  height: 72px;
+  height: 80px;
   width: 349px;
   color: #0e1527;
-  font-family: 'Fira Sans';
+  /* font-family: 'Fira Sans'; */
   font-size: 16px;
   letter-spacing: 0.2px;
   line-height: 19px;
   text-overflow: ellipsis;
   overflow: hidden;
   margin-bottom: 16px;
+}
+
+.button {
+  height: 25px;
+}
+
+.button svg {
+  width: 15px;
+  margin-left: 20px;
 }

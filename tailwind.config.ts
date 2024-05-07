@@ -10,7 +10,15 @@ const config = withTV({
     extend: {
       colors: {
         'dark-purple': '#01041F',
-        'light-purple': '#020365'
+        'light-purple': '#020365',
+        'light-gray': '#efeff8',
+        'dark-blue': '#0e1527',
+        'white': '#ffffff',
+        'lighter-black': '#141414',
+        'purple': '#371172',
+        'gray': '#f8f8f8',
+        'red': '#ff470b',
+        'black': '#000',
 
       },
       backgroundImage: {

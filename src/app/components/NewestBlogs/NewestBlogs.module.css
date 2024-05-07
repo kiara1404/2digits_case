@@ -1,5 +1,5 @@
 .title {
-  margin: 80px 0  32px 0;
+  margin: 80px 0 32px 0;
   height: 56px;
   width: 1108px;
   color: #0e1527;
@@ -7,4 +7,8 @@
   font-weight: bold;
   letter-spacing: 0;
   line-height: 56px;
+}
+
+.wrapper {
+  margin: 0 0 160px 0;
 }
