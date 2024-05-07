@@ -1,0 +1,6 @@
+query Pages($pageId: String) {
+  Page(id: $pageId) {
+    _id
+    title
+  }
+}

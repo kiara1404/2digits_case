@@ -1,0 +1,18 @@
+query Blogs($limit: Int) {
+  Blogs(limit: $limit) {
+    items {
+      banner_image {
+        url
+      }
+      content {
+        ... on Text {
+          text
+        }
+      }
+      title
+      categories {
+        slug
+      }
+    }
+  }
+}

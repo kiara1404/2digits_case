@@ -1,0 +1,39 @@
+.cover {
+  height: 601px;
+  max-height: 601px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://2digits.stream.prepr.io/w_4000/1miyaeidn492-june-atmosphere.jpg');
+  background-size: cover;
+  background-position: 0 -150;
+  background-blend-mode: darken;
+  filter: grayscale();
+  z-index: -99;
+}
+.textBlock {
+  width: 100%;
+}
+.textBlock h1 {
+  height: 144px;
+  width: 730px;
+  color: #ffffff;
+  font-size: 72px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 72px;
+  text-align: center;
+  text-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  padding: 162px 0 0 0;
+}
+
+.textBlock p {
+  height: 108px;
+  width: 823px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: center;
+  text-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
+  padding: 192px 0 0 0;
+}

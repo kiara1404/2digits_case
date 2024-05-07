@@ -1,0 +1,38 @@
+.cover {
+  height: 240px;
+  width: 348px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.image {
+  height: 240px;
+  width: 348px;
+  object-fit: cover;
+  max-width: none;
+}
+
+.title {
+  height: 50px;
+  width: 348px;
+  color: #0e1527;
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 23px;
+  margin-bottom: 14px;
+}
+
+.text {
+  height: 72px;
+  width: 349px;
+  color: #0e1527;
+  font-family: 'Fira Sans';
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  line-height: 19px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 16px;
+}

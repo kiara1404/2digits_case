@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Barlow, Fira_Sans, Inter } from 'next/font/google';
 
 import './globals.css';
 
+import NavigationBar from './components/Navigation/NavigationBar';
+
 const inter = Inter({ subsets: ['latin'] });
+const barlow = Barlow({ weight: ['100', '500', '600'] });
+const fira = Fira_Sans({ weight: '200' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,7 +17,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`m-auto w-10/12 ${barlow.className}`}>
+        <header>
+          <NavigationBar />
+        </header>
+        <main className="max-width-7xl">{children}</main>
+      </body>
     </html>
   );
 }
