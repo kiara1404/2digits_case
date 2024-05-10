@@ -1,4 +1,5 @@
-import 'server-only';
+"use server"
+// import 'server-only';
 
 import { createFetch } from 'ofetch';
 
@@ -16,6 +17,7 @@ export const gqlClient = createFetch({
     responseType: 'json',
     method: 'POST',
     retry: 3,
+    mode: 'no-cors',
     parseResponse(responseText) {
       return JSON.parse(responseText, (_, value: unknown) => value ?? undefined) as unknown;
     },

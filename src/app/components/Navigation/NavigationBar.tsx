@@ -1,19 +1,27 @@
+import Link from 'next/link';
+
 import Logo from '../Logo/Logo';
 
 const NavigationBar = () => {
   return (
     <>
-      <nav className="font-barlow mb-px flex h-20 w-full w-full justify-between bg-gradient-to-r from-dark-purple to-light-purple tracking-wider">
+      <nav className="mb-px flex size-full h-20 justify-between bg-gradient-to-r from-dark-purple to-light-purple tracking-wider">
         <div className="m-auto flex w-10/12 justify-between">
           <div className=" flex justify-between">
             <Logo />
           </div>
+
           <ul className="flex pt-4">
             <li>
-              <a className="px-4 text-white">Home</a>
+              <Link href="/" className="px-4 text-white">
+                Home
+              </Link>
             </li>
+
             <li>
-              <a className="px-4 text-white">Blogs</a>
+              <Link href="/blogs" className="px-4 text-white">
+                Blogs
+              </Link>
             </li>
           </ul>
         </div>

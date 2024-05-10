@@ -9,8 +9,8 @@ query SingleBlog($blogId: String) {
     }
     content {
       ... on Text {
-        text
+        html
       }
     }
   }
-  }
+}

@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+'use client';
 
+import { useState } from 'react';
 import styles from './Tag.module.css';
 
-export default function Tag({ text }: { text: string }) {
+export default function Tag({ text, onClick }: { text: string, onClick: any }) {
+
   return (
-    <h6 className={`bg-light-gray text-dark-blue mr-2 text-xs uppercase ${styles.tag}`}>{text}</h6>
+    <button onClick={onClick}>
+      <h6 className={`mr-2 bg-light-gray text-xs uppercase text-dark-blue ${styles.tag}`}>
+        {text}
+      </h6>
+    </button>
   );
 }

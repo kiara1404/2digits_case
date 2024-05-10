@@ -1,15 +1,15 @@
-query Blogs($where: BlogWhereInput, $limit: Int) {
-  Blogs(where: $where, limit: $limit) {
+query SimilarBlogs($blogId: String!, $limit: Int) {
+  Similar_Blogs(id: $blogId, limit: $limit) {
     items {
       banner_image {
         url
       }
+      title
       content {
         ... on Text {
           text
         }
       }
-      title
       categories {
         slug
       }
