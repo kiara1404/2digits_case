@@ -28,7 +28,7 @@ export default async function Blogs({
   const categories = Blogs?.items.map((blog) => blog.categories[0]?.slug) || [];
 
   // eslint-disable-next-line unicorn/no-array-reduce
-  const reducedCategories = categories.reduce<string[]>((result, category) => {
+  const reducedCategories = categories.reduce((result, category) => {
     if (!result.includes(category)) {
       result.push(category);
     }

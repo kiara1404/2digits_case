@@ -20,7 +20,7 @@ export default async function Home() {
         bannerHeight={'large'}
       />
 
-      {Blogs.items.length > 0 ? (
+      {Blogs?.items.length > 0 ? (
         <NewestBlogs blogs={Blogs?.items} title="De nieuwste blogs" />
       ) : (
         <div className="mx-auto mb-20 mt-10 h-20 w-10/12">
