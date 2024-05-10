@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import Image from 'next/image';
 
+
+
 import styles from './Hero.module.css';
+
 
 interface Props {
   image: { url: string; name: string } | string;

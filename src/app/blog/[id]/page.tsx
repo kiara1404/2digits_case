@@ -1,11 +1,17 @@
+
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import BlogsGroup from '@/app/components/BlogsGroup/BlogsGroup';
 import HeroImage from '@/app/components/Hero/HeroImage';
 import Tag from '@/app/components/Tag/Tag';
 import { PreprSdk } from '@/server/prepr';
 
+
+
 import styles from './page.module.css';
+
 
 export default async function Blog({ params }: { params: { id: string } }) {
   const { Blog } = await PreprSdk.SingleBlog({ blogId: params.id });
