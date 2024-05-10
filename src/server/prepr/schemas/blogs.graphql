@@ -1,5 +1,5 @@
-query Blogs($where: BlogWhereInput, $limit: Int) {
-  Blogs(where: $where, limit: $limit) {
+query Blogs($skip: Int, $limit: Int, $where: BlogWhereInput) {
+  Blogs(skip: $skip, limit: $limit, where: $where) {
     items {
       banner_image {
         url
@@ -15,5 +15,6 @@ query Blogs($where: BlogWhereInput, $limit: Int) {
       }
       _id
     }
+    total
   }
 }

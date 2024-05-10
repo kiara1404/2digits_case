@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import BlogsGroup from '@/app/components/BlogsGroup/BlogsGroup';
 import HeroImage from '@/app/components/Hero/HeroImage';
 import Tag from '@/app/components/Tag/Tag';
 import { PreprSdk } from '@/server/prepr';
 
 import styles from './page.module.css';
-import BlogsGroup from '@/app/components/BlogsGroup/BlogsGroup';
 
 export default async function Blog({ params }: { params: { id: string } }) {
   const { Blog } = await PreprSdk.SingleBlog({ blogId: params.id });
@@ -20,6 +20,7 @@ export default async function Blog({ params }: { params: { id: string } }) {
 
         <article>
           <h2 className={styles.title}>{Blog.title}</h2>
+
           {Blog?.content?.map((item, index) => (
             <div
               className={styles.content}
@@ -29,9 +30,11 @@ export default async function Blog({ params }: { params: { id: string } }) {
         </article>
       </section>
 
-      <section className="w-full bg-light-gray pt-px">
-        <BlogsGroup blogs={Similar_Blogs?.items || []} title="Gerelateerde blogs" />
-      </section>
+      {Similar_Blogs?.items?.length > 0 && (
+        <section className="w-full bg-light-gray pt-px">
+          <BlogsGroup blogs={Similar_Blogs?.items || []} title="Gerelateerde blogs" />
+        </section>
+      )}
     </>
   );
 }

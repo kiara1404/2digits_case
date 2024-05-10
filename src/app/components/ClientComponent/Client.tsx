@@ -1,12 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+
 
 import BlogCard from '../BlogCard/BlogCard';
 import Tag from '../Tag/Tag';
 import styles from './client.module.css';
+
 
 interface Blog {
   banner_image: { url: string };
@@ -19,20 +24,41 @@ interface Blog {
 export default function Client({ categories, blogs }: { categories: string[]; blogs: Blog[] }) {
   const router = useRouter();
   const pathname = usePathname();
-
-  const [newData, setNewData] = useState<Blog[]>(blogs.items);
-  const [selected, setSelected] = useState('');
-
   const searchParams = useSearchParams();
 
-  const handleSearch = (searchTerm: string) => {
+  const [newData, setNewData] = useState<Blog[]>(blogs.items);
+  const [selected, setSelected] = useState(1);
+  const [skip, setSkip] = useState(0);
+  const limit = 9;
+  const totalPages = Math.ceil(blogs?.total / 9);
+  const totalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const handleSearch = (searchTerm: string, limit: number, skip: number) => {
     const params = new URLSearchParams(searchParams);
 
     if (searchTerm) {
       params.set('query', searchTerm);
+      params.delete('limit', limit);
+      params.delete('skip', skip);
     } else {
       params.delete('query');
     }
+    router.replace(`${pathname}?${params.toString()}`);
+    setNewData(blogs.items);
+  };
+
+  const handlePaginationNext = (skip: number, limit: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('skip', skip);
+    params.set('limit', limit);
+    router.replace(`${pathname}?${params.toString()}`);
+    setNewData(blogs.items);
+  };
+
+  const handlePaginationBack = (skip: number, limit: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('skip', skip);
+    params.set('limit', limit);
     router.replace(`${pathname}?${params.toString()}`);
     setNewData(blogs.items);
   };
@@ -49,6 +75,15 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
       setNewData(arr);
     });
   };
+
+  useEffect(() => {
+    if (skip < blogs?.total) {
+      handlePaginationNext(skip, limit, blogs?.total);
+    }
+    if (skip < blogs?.total || skip > blogs?.total) {
+      handlePaginationBack(skip, limit, blogs?.total);
+    }
+  }, [skip]);
 
   return (
     <>
@@ -107,6 +142,53 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
               key={index}
             />
           ))}
+        </section>
+
+        <section className={`flex justify-center ${styles.pagination}`}>
+          {skip > 0 && (
+            <button
+              onClick={() => {
+                setSkip((prev) => prev - 9);
+                setSelected((prev) => prev - 1);
+              }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-6 w-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5 8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
+          )}
+          <section className="flex">
+            {totalPagesArray.map((item) => (
+              <p className={selected === item ? styles.selected : styles.paginationButton}>
+                {item}
+              </p>
+            ))}
+          </section>
+
+          <button
+            onClick={() => {
+              setSkip((prev) => prev + 9);
+              setSelected((prev) => prev + 1);
+            }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </section>
       </section>
     </>

@@ -20,7 +20,13 @@ export default async function Home() {
         bannerHeight={'large'}
       />
 
-      <NewestBlogs blogs={Blogs?.items} title="De nieuwste blogs" />
+      {Blogs.items.length > 0 ? (
+        <NewestBlogs blogs={Blogs?.items} title="De nieuwste blogs" />
+      ) : (
+        <div className="mx-auto mb-20 mt-10 h-20 w-10/12">
+          <h2 className="text-3xl">Geen blogs gevonden</h2>
+        </div>
+      )}
     </>
   );
 }

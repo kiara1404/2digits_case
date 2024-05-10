@@ -6,10 +6,25 @@ import { PreprSdk } from '@/server/prepr';
 import Client from '../components/ClientComponent/Client';
 import HeroImage from '../components/Hero/HeroImage';
 
-export default async function Blogs({ searchParams }: { searchParams?: { query?: string } }) {
+export default async function Blogs({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    skip?: number;
+    limit?: number;
+  };
+}) {
   const query = searchParams?.query || '';
+  const skip = searchParams?.skip || 0;
+  const limit = searchParams?.limit || 9;
+
   const { Page } = await PreprSdk.SinglePage({ slug: 'blog' });
-  const { Blogs } = await PreprSdk.Blogs({ where: { _search: query } });
+  const { Blogs } = await PreprSdk.Blogs({
+    where: { _search: query },
+    skip: parseInt(skip),
+    limit: parseInt(limit),
+  });
   const categories = Blogs?.items.map((blog) => blog.categories[0]?.slug) || [];
 
   // eslint-disable-next-line unicorn/no-array-reduce
@@ -19,6 +34,8 @@ export default async function Blogs({ searchParams }: { searchParams?: { query?:
     }
     return result;
   }, []);
+
+  console.log('skip', parseInt(skip));
 
   return (
     <>
