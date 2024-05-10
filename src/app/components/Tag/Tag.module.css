@@ -7,3 +7,12 @@
   text-align: center;
   padding: 4px 16px;
 }
+
+.selected {
+  height: 32px;
+  width: 101px;
+  border: 2px solid #efeff8;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px 16px;
+}

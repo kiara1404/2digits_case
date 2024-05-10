@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -8,12 +8,20 @@ import BlogCard from '../BlogCard/BlogCard';
 import Tag from '../Tag/Tag';
 import styles from './client.module.css';
 
-export default function Client({ categories, blogs }) {
+interface Blog {
+  banner_image: { url: string };
+  categories: [{ slug: string }];
+  content: [{ text: string }];
+  title: string;
+  _id: string;
+}
+
+export default function Client({ categories, blogs }: { categories: string[]; blogs: Blog[] }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [selected, setSelected] = useState(['']);
-  const [search, setSearch] = useState(['']);
+  const [newData, setNewData] = useState<Blog[]>(blogs.items);
+  const [selected, setSelected] = useState('');
 
   const searchParams = useSearchParams();
 
@@ -21,23 +29,34 @@ export default function Client({ categories, blogs }) {
     const params = new URLSearchParams(searchParams);
 
     if (searchTerm) {
-    //   setSearch(searchTerm);
       params.set('query', searchTerm);
     } else {
       params.delete('query');
     }
     router.replace(`${pathname}?${params.toString()}`);
+    setNewData(blogs.items);
+  };
+
+  const filterTags = (blogCategory: string) => {
+    const arr: Blog[] = [];
+    blogs.items.filter((item: Blog) => {
+      if (item.categories[0].slug == blogCategory) {
+        arr.push(item);
+      } else {
+        return arr;
+      }
+
+      setNewData(arr);
+    });
   };
 
   return (
     <>
-      {/* <SearchBar onSubmit={(e) => handleSearch(e.target.value)} /> */}
       <section className={`bg-light-gray ${styles.wrapper}`}>
         <div className="m-auto w-10/12">
           <h2 className={`text-lg ${styles.title}`}>Search for blogs</h2>
 
-          <form
-            className="m-auto flex">
+          <form className="m-auto flex">
             <input
               className={`grow bg-white ${styles.input}`}
               type="text"
@@ -55,22 +74,30 @@ export default function Client({ categories, blogs }) {
         <h2 className={`text-xl ${styles.title}`}>Topics</h2>
 
         <section className="mb-12 flex">
-          {/* <button> */}
           <Tag
             text="All blogs"
-            onClick={() => router.push(pathname + '?' + createQueryString('sort', 'asc'))}
+            onClick={() => {
+              setNewData(blogs.items);
+              setSelected('All blogs');
+            }}
+            selected={selected}
           />
-          {/* </button> */}
 
           {categories.map((category: string, index: number) => (
-            // <button>
-            <Tag text={category} onClick={(x) => setSelected([category])} />
-            // </button>
+            <Tag
+              text={category}
+              onClick={() => {
+                filterTags(category);
+                setSelected(category);
+              }}
+              selected={selected}
+              key={index}
+            />
           ))}
         </section>
 
         <section className="flex flex-wrap justify-between">
-          {blogs?.items.map((blog, index) => (
+          {newData.map((blog, index) => (
             <BlogCard
               image={blog.banner_image.url}
               title={blog.title}
