@@ -21,6 +21,11 @@ const config = withTV({
         'black': '#000',
 
       },
+      fontFamily: {
+        'font-body': ['Fira Sans', 'sans-serif'],
+        'font-heading': ['Barlow', 'sans-serif'],
+
+      },
       fontSize: {
         '3xl': '36px',
       },

@@ -2,16 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-
-
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-
 
 import BlogCard from '../BlogCard/BlogCard';
 import Tag from '../Tag/Tag';
 import styles from './client.module.css';
-
 
 interface Blog {
   banner_image: { url: string };
@@ -108,7 +103,7 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
       <section className="m-auto w-10/12">
         <h2 className={`text-xl ${styles.title}`}>Topics</h2>
 
-        <section className="mb-12 flex">
+        <section className="mb-12 flex flex-wrap">
           <Tag
             text="All blogs"
             onClick={() => {

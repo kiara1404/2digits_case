@@ -9,8 +9,8 @@ export default function Tag({
   selected,
 }: {
   text: string;
-  onClick: () => void;
-  selected: string;
+  onClick?: () => void;
+  selected?: string;
 }) {
   const isSelected = selected === text;
 

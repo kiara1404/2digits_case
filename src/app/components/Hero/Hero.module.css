@@ -1,7 +1,6 @@
 .cover {
   width: 100%;
   max-height: 601px;
-  background-color: pink;
   z-index: -999;
   overflow: hidden;
   position: relative;
@@ -9,15 +8,13 @@
 .blogCover {
   width: 100%;
   max-height: 301px;
-  background-color: pink;
   z-index: -999;
   overflow: hidden;
   position: relative;
 }
 
-.title{
-  margin-top: -60px ;
-
+.title {
+  margin-top: -60px;
 }
 
 .image {
@@ -25,6 +22,7 @@
   object-fit: cover;
   object-position: 0 -150px;
   filter: brightness(50%) grayscale();
+  min-height: 200px;
 }
 
 .textBlock {

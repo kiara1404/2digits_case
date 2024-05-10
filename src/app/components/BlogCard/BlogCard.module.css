@@ -41,10 +41,9 @@
 }
 
 .text {
-  height: 80px;
+  height: 78px;
   width: 349px;
   color: #0e1527;
-  /* font-family: 'Fira Sans'; */
   font-size: 16px;
   letter-spacing: 0.2px;
   line-height: 19px;
