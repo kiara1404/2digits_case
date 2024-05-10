@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,24 +9,29 @@ import BlogCard from '../BlogCard/BlogCard';
 import Tag from '../Tag/Tag';
 import styles from './client.module.css';
 
-interface Blog {
+interface BlogItem {
   banner_image: { url: string };
   categories: [{ slug: string }];
   content: [{ text: string }];
   title: string;
   _id: string;
 }
+interface Blogs {
+  items: BlogItem[];
+  total: number;
+}
 
-export default function Client({ categories, blogs }: { categories: string[]; blogs: Blog[] }) {
+export default function Client({ categories, blogs }: { categories: string[]; blogs: Blogs }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [newData, setNewData] = useState<Blog[]>(blogs.items);
+  const [newData, setNewData] = useState<BlogItem[]>(blogs.items);
+  const [selectedTag, setSelectedTag] = useState('');
   const [selected, setSelected] = useState(1);
   const [skip, setSkip] = useState(0);
   const limit = 9;
-  const totalPages = Math.ceil(blogs?.total / 9);
+  const totalPages = Math.ceil(blogs.total / 9);
   const totalPagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const handleSearch = (searchTerm: string, limit: number, skip: number) => {
@@ -33,8 +39,8 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
 
     if (searchTerm) {
       params.set('query', searchTerm);
-      params.delete('limit', limit);
-      params.delete('skip', skip);
+      params.delete('limit', limit.toString());
+      params.delete('skip', skip.toString());
     } else {
       params.delete('query');
     }
@@ -44,23 +50,23 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
 
   const handlePaginationNext = (skip: number, limit: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set('skip', skip);
-    params.set('limit', limit);
+    params.set('skip', skip.toString());
+    params.set('limit', limit.toString());
     router.replace(`${pathname}?${params.toString()}`);
     setNewData(blogs.items);
   };
 
   const handlePaginationBack = (skip: number, limit: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set('skip', skip);
-    params.set('limit', limit);
+    params.set('skip', skip.toString());
+    params.set('limit', limit.toString());
     router.replace(`${pathname}?${params.toString()}`);
     setNewData(blogs.items);
   };
 
   const filterTags = (blogCategory: string) => {
-    const arr: Blog[] = [];
-    blogs.items.filter((item: Blog) => {
+    const arr: BlogItem[] = [];
+    blogs.items.filter((item: BlogItem) => {
       if (item.categories[0].slug == blogCategory) {
         arr.push(item);
       } else {
@@ -72,11 +78,11 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
   };
 
   useEffect(() => {
-    if (skip < blogs?.total) {
-      handlePaginationNext(skip, limit, blogs?.total);
+    if (skip < blogs.total) {
+      handlePaginationNext(skip, limit);
     }
-    if (skip < blogs?.total || skip > blogs?.total) {
-      handlePaginationBack(skip, limit, blogs?.total);
+    if (skip < blogs.total || skip > blogs.total) {
+      handlePaginationBack(skip, limit);
     }
   }, [skip]);
 
@@ -92,7 +98,7 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
               type="text"
               placeholder="Search"
               defaultValue={searchParams.get('query')?.toString()}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value, skip, limit)}
             />
 
             <input className={`ml-4 bg-purple  text-white ${styles.submit}`} type="submit" />
@@ -108,9 +114,9 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
             text="All blogs"
             onClick={() => {
               setNewData(blogs.items);
-              setSelected('All blogs');
+              setSelectedTag('All blogs');
             }}
-            selected={selected}
+            selected={selectedTag}
           />
 
           {categories.map((category: string, index: number) => (
@@ -118,9 +124,9 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
               text={category}
               onClick={() => {
                 filterTags(category);
-                setSelected(category);
+                setSelectedTag(category);
               }}
-              selected={selected}
+              selected={selectedTag}
               key={index}
             />
           ))}
@@ -152,7 +158,7 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6">
+                className="size-6">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -161,9 +167,12 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
               </svg>
             </button>
           )}
+
           <section className="flex">
-            {totalPagesArray.map((item) => (
-              <p className={selected === item ? styles.selected : styles.paginationButton}>
+            {totalPagesArray.map((item, index) => (
+              <p
+                className={selected === item ? styles.selected : styles.paginationButton}
+                key={index}>
                 {item}
               </p>
             ))}
@@ -180,7 +189,7 @@ export default function Client({ categories, blogs }: { categories: string[]; bl
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6">
+              className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
           </button>

@@ -11,19 +11,19 @@ export default async function Blogs({
 }: {
   searchParams?: {
     query?: string;
-    skip?: number;
-    limit?: number;
+    skip?: string;
+    limit?: string;
   };
 }) {
   const query = searchParams?.query || '';
-  const skip = searchParams?.skip || 0;
-  const limit = searchParams?.limit || 9;
+  const skip = searchParams?.skip || '0';
+  const limit = searchParams?.limit || '9';
 
   const { Page } = await PreprSdk.SinglePage({ slug: 'blog' });
   const { Blogs } = await PreprSdk.Blogs({
     where: { _search: query },
-    skip: parseInt(skip),
-    limit: parseInt(limit),
+    skip: Number.parseInt(skip),
+    limit: Number.parseInt(limit),
   });
   const categories = Blogs?.items.map((blog) => blog.categories[0]?.slug) || [];
 
@@ -35,7 +35,7 @@ export default async function Blogs({
     return result;
   }, []);
 
-  console.log('skip', parseInt(skip));
+  console.log('skip', Number.parseInt(skip));
 
   return (
     <>
